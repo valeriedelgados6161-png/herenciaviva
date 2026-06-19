@@ -41,6 +41,43 @@
         .post-content { padding: 20px; }
         .post-content h2 { margin-top: 0; color: #1d3557; }
         .close-btn { background: #e63946; color: white; border: none; padding: 15px; border-radius: 0 0 20px 20px; font-weight: bold; cursor: pointer; }
+
+        /* Diseño del Modal Amplio */
+        .modal { 
+            display: none; 
+            position: fixed; 
+            inset: 0; 
+            background: rgba(0, 0, 0, 0.7); 
+            z-index: 3000; 
+            justify-content: center; 
+            align-items: center; 
+            padding: 15px; 
+        }
+
+        /* Tarjeta principal (el formulario) */
+        .post-card { 
+            background: white; 
+            width: 100%; 
+            max-width: 450px; /* Esto controla el ancho cómodo */
+            max-height: 90vh; /* Esto controla que ocupe casi toda la pantalla */
+            border-radius: 20px; 
+            padding: 25px; /* Esto da el espacio interno para que no se vea apretado */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            overflow-y: auto; 
+            display: flex; 
+            flex-direction: column;
+        }
+
+        /* Mejora estética para los campos de texto */
+        input, textarea, select { 
+            width: 100%; 
+            padding: 14px; 
+            margin: 8px 0 15px 0; 
+            border: 1px solid #ccc; 
+            border-radius: 10px; 
+            font-size: 16px; 
+            box-sizing: border-box; 
+        }
     </style>
 </head>
 <body>
@@ -105,7 +142,7 @@
             
        <form action="https://formsubmit.co/b8fbb405a3bce986fe67732366390e27" method="POST" enctype="multipart/form-data">
     
-    <h2 style="margin-top:0;">Registrar nuevo lugar</h2>
+    
 
     <label for="nombre">Nombre del sitio:</label>
     <input type="text" id="nombre" name="nombre" placeholder="Ej: Iglesia San Lorenzo" required>
