@@ -54,19 +54,19 @@
             padding: 15px; 
         }
 
-        /* Tarjeta principal (el formulario) */
-        .post-card { 
-            background: white; 
-            width: 100%; 
-            max-width: 450px; /* Esto controla el ancho cómodo */
-            max-height: 90vh; /* Esto controla que ocupe casi toda la pantalla */
-            border-radius: 20px; 
-            padding: 25px; /* Esto da el espacio interno para que no se vea apretado */
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            overflow-y: auto; 
-            display: flex; 
-            flex-direction: column;
-        }
+      .post-card { 
+    background: white; 
+    width: 100%; 
+    max-width: 450px; 
+    max-height: 90vh; 
+    border-radius: 20px; 
+    /* ELIMINA EL PADDING DE AQUÍ */
+    padding: 0; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    overflow-y: auto; 
+    display: flex; 
+    flex-direction: column;
+}
 
         /* Mejora estética para los campos de texto */
         input, textarea, select { 
@@ -78,6 +78,30 @@
             font-size: 16px; 
             box-sizing: border-box; 
         }
+
+        button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+/* Botón Enviar */
+button[type="submit"] {
+    background: #004a7c;
+    color: white;
+}
+
+/* Botón Cancelar */
+button[type="button"] {
+    background: #eee;
+    color: #333;
+}
     </style>
 </head>
 <body>
@@ -142,29 +166,39 @@
             
        <form action="https://formsubmit.co/b8fbb405a3bce986fe67732366390e27" method="POST" enctype="multipart/form-data">
     
-    
-
     <label for="nombre">Nombre del sitio:</label>
     <input type="text" id="nombre" name="nombre" placeholder="Ej: Iglesia San Lorenzo" required>
 
     <label for="coords">Coordenadas:</label>
-    <input type="text" id="coords" name="coordenadas" placeholder="Haz clic en el mapa" readonly required>
+    <input type="text" id="coords" name="coordenadas" readonly required>
 
     <label for="categoria">Categoría:</label>
     <select id="categoria" name="categoria" required>
-        <option value="">Selecciona una opción</option>
+        <option value="">Selecciona una categoría</option>
         <option value="Iglesias">Iglesias</option>
-        <option value="Historia">Historia y Raíces</option>
+        <option value="Sitios históricos">Sitios históricos</option>
+        <option value="Monumentos">Monumentos</option>
+        <option value="Talleres de artesanías">Talleres de artesanías</option>
+        <option value="Confección de trajes típicos">Confección de trajes típicos</option>
+        <option value="Fondas tradicionales">Fondas tradicionales</option>
+        <option value="Comida típica">Comida típica</option>
+        <option value="Postres artesanales">Postres artesanales</option>
+        <option value="Festividades">Festividades</option>
+        <option value="Mitos y leyendas locales">Mitos y leyendas locales</option>
+        <option value="Plazas">Plazas</option>
+        <option value="Parques culturales">Parques culturales</option>
+        <option value="Centros comunitarios">Centros comunitarios</option>
+        <option value="Datos interesantes">Datos interesantes</option>
     </select>
 
     <label for="descripcion">Descripción:</label>
-    <textarea id="descripcion" name="descripcion" rows="4" placeholder="Describe el lugar aquí..." required></textarea>
+    <textarea id="descripcion" name="descripcion" rows="4" placeholder="Describe brevemente este sitio..." required></textarea>
 
     <label for="foto">Sube una foto del lugar:</label>
     <input type="file" id="foto" name="foto" accept="image/*" required>
 
-    <button type="submit">Enviar registro</button>
-    <button type="button" onclick="document.getElementById('formulario').style.display='none'" style="background:#ccc; margin-top:10px;">Cancelar</button>
+    <button type="submit">Enviar sugerencia</button>
+    <button type="button" onclick="document.getElementById('formulario').style.display='none'">Cancelar</button>
 </form>
 
         </div>
