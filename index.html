@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa Cultural de Panamá</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <style>
+        body { margin: 0; font-family: 'Segoe UI', sans-serif; background: #f4f7f6; }
+        .container { max-width: 600px; margin: auto; padding: 15px; }
+ h1 { 
+    color: #7d6948; /* Tono caqui tierra elegante */
+    margin: 15px 0 5px 0; 
+    font-family: 'Playfair Display', serif; 
+    font-size: 40px; 
+    text-align: center;
+    line-height: 1.1;
+}
+
+.eslogan { 
+    color: #8d7a5b; /* Tono caqui un poco más claro para suavidad */
+    font-family: 'Montserrat', sans-serif; 
+    font-size: 13px; 
+    margin-bottom: 25px; 
+    text-align: center;
+    letter-spacing: 2px; 
+    text-transform: uppercase;
+    font-weight: 700;
+}
+        .tip { background: #fff3cd; padding: 10px; border-radius: 8px; font-size: 13px; margin-bottom: 15px; border-left: 4px solid #ffeeba; }
+        
+        details { background: white; margin-bottom: 8px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        summary { padding: 15px; font-weight: bold; color: white; border-radius: 12px; cursor: pointer; list-style: none; display: flex; justify-content: space-between; }
+        .subcat-list { padding: 10px; background: #fff; border-radius: 0 0 12px 12px; }
+        
+        #mapa { height: 400px; border: 5px solid white; border-radius: 18px; margin-top: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 3000; justify-content: center; align-items: center; padding: 10px; }
+        .post-card { background: white; width: 100%; max-width: 500px; max-height: 90vh; border-radius: 20px; overflow-y: auto; display: flex; flex-direction: column; }
+        .post-card img { width: 100%; height: 250px; object-fit: cover; border-radius: 20px 20px 0 0; }
+        .post-content { padding: 20px; }
+        .post-content h2 { margin-top: 0; color: #1d3557; }
+        .close-btn { background: #e63946; color: white; border: none; padding: 15px; border-radius: 0 0 20px 20px; font-weight: bold; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Mapa Cultural de Panamá</h1>
+    <div class="eslogan">Nuestras raíces a un toque de distancia.</div>
+    <div class="tip">💡 Haz click en el mapa para sugerir una nueva ubicación.</div>
+
+    <!-- Categorías -->
+    <details><summary style="background:#2c3e50;">Patrimonio Histórico <span>▼</span></summary>
+        <div class="subcat-list">
+            <label><input type="checkbox" class="filtro" data-cat="Iglesias" checked> Iglesias</label><br>
+            <label><input type="checkbox" class="filtro" data-cat="Sitios históricos" checked> Sitios históricos</label><br>
+            <label><input type="checkbox" class="filtro" data-cat="Monumentos" checked> Monumentos</label>
+        </div>
+    </details>
+
+    <details><summary style="background:#27ae60;">Manos que Crean <span>▼</span></summary>
+        <div class="subcat-list">
+            <label><input type="checkbox" class="filtro" data-cat="Talleres de artesanías" checked> Talleres de artesanías</label><br>
+            <label><input type="checkbox" class="filtro" data-cat="Confección de trajes típicos" checked> Confección de trajes típicos</label>
+        </div>
+    </details>
+
+    <details><summary style="background:#e67e22;">Sabores de Nuestra Tierra <span>▼</span></summary>
+        <div class="subcat-list">
+            <label><input type="checkbox" class="filtro" data-cat="Fondas tradicionales" checked> Fondas tradicionales</label><br>
+            <label><input type="checkbox" class="filtro" data-cat="Comida típica" checked> Comida típica</label><br>
+            <label><input type="checkbox" class="filtro" data-cat="Postres artesanales" checked> Postres artesanales</label>
+        </div>
+    </details>
+
+    <details><summary style="background:#880e4f;">Expresiones y Leyendas <span>▼</span></summary>
+        <div class="subcat-list">
+            <label><input type="checkbox" class="filtro" data-cat="Festividades" checked> Festividades</label><br>
+            <label><input type="checkbox" class="filtro" data-cat="Mitos y leyendas locales" checked> Mitos y leyendas locales</label>
+        </div>
+    </details>
+
+    <details><summary style="background:#2980b9;">Espacios de Encuentro <span>▼</span></summary>
+        <div class="subcat-list">
+            <label><input type="checkbox" class="filtro" data-cat="Plazas" checked> Plazas</label><br>
+            <label><input type="checkbox" class="filtro" data-cat="Parques culturales" checked> Parques culturales</label><br>
+            <label><input type="checkbox" class="filtro" data-cat="Centros comunitarios" checked> Centros comunitarios</label>
+        </div>
+    </details>
+
+    <details><summary style="background:#f1c40f;">Secretos de la Tierra <span>▼</span></summary>
+        <div class="subcat-list">
+            <label><input type="checkbox" class="filtro" data-cat="Datos interesantes" checked> Datos interesantes</label>
+        </div>
+    </details>
+
+    <div id="mapa"></div>
+</div>
+
+<!-- Modal Formulario -->
+<div id="formulario" class="modal">
+    <div class="post-card">
+        <div class="post-content">
+            <h2>Sugerir nueva ubicación</h2>
+<form action="https://formsubmit.co/el/guwexe" method="POST" enctype="multipart/form-data" 
+      style="display: flex; flex-direction: column; gap: 12px; padding: 15px; background: #fff; border-radius: 20px; border: 1px solid #eee; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+    
+    <h3 style="margin: 0; color: #1d3557; text-align: center; font-family: 'Montserrat', sans-serif;">Sugerir nuevo sitio</h3>
+
+    <!-- Nombre del sitio -->
+    <input type="text" name="nombre" placeholder="Nombre del sitio" required 
+           style="padding: 12px; border: 1px solid #ddd; border-radius: 10px; font-size: 14px;">
+    
+    <!-- Coordenadas (Autocompletadas por tu script) -->
+    <input id="coords" name="coordenadas" readonly 
+           style="padding: 12px; border: 1px solid #ddd; border-radius: 10px; background-color: #f9f9f9; color: #666; font-size: 14px;">
+    
+    <!-- Categoría -->
+    <select name="categoria" required 
+            style="padding: 12px; border: 1px solid #ddd; border-radius: 10px; font-size: 14px; background: white;">
+        <option value="">Selecciona una categoría</option>
+        <option value="Patrimonio Histórico">Patrimonio Histórico</option>
+        <option value="Manos que Crean">Manos que Crean</option>
+        <option value="Sabores de Nuestra Tierra">Sabores de Nuestra Tierra</option>
+        <option value="Expresiones y Leyendas">Expresiones y Leyendas</option>
+        <option value="Espacios de Encuentro">Espacios de Encuentro</option>
+        <option value="Secretos de la Tierra">Secretos de la Tierra</option>
+    </select>
+
+    <!-- Descripción -->
+    <textarea name="descripcion" placeholder="Describe brevemente este sitio..." required 
+              style="padding: 12px; border: 1px solid #ddd; border-radius: 10px; height: 80px; font-family: inherit; font-size: 14px; resize: none;"></textarea>
+    
+    <!-- Carga de archivo -->
+    <div style="border: 2px dashed #ccc; padding: 10px; border-radius: 10px; text-align: center; background: #fdfdfd;">
+        <label style="font-size: 12px; color: #555; display: block; margin-bottom: 5px;">📷 Subir foto del sitio:</label>
+        <input type="file" name="foto" accept="image/*" style="font-size: 12px; width: 100%;">
+    </div>
+    
+    <!-- Botón de envío -->
+    <button type="submit" 
+            style="padding: 14px; background: #7d6948; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-family: 'Montserrat', sans-serif;">
+        Enviar sugerencia
+    </button>
+</form>
+        </div>
+        <button class="close-btn" onclick="document.getElementById('formulario').style.display='none'">Cerrar</button>
+    </div>
+</div>
+
+<!-- Modal Info Post -->
+<div id="info-modal" class="modal">
+    <div class="post-card">
+        <div id="post-data"></div>
+        <button class="close-btn" onclick="document.getElementById('info-modal').style.display='none'">Cerrar Post</button>
+    </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+    const map = L.map('mapa').setView([7.8357, -80.3964], 12);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+const puntos = [
+    { 
+        lat: 7.8357, lng: -80.3964, cat: 'Festividades', nombre: 'Semana del Campesino en Agua Buena', color: '#880e4f', 
+        img: 'https://i.postimg.cc/vm2w86Ds/images-(1).jpg', 
+        desc: `
+            <p>Esta es una celebración donde nuestra comunidad se une para rendir homenaje a nuestras tradiciones, reflejando el orgullo por nuestra cultura a través de la vestimenta típica.</p>
+            <p>Un momento muy especial es la presentación de la nueva reina, quien toma el lugar de la reina saliente para representar a nuestra comunidad durante todo el año.</p>
+            <h3>Elementos de nuestra identidad</h3>
+            <p>Es característico ver las carretas decoradas con elementos de nuestra identidad, como totumas, instrumentos musicales, bateas y churucas, mientras las empolleradas y la reina bailan al ritmo del tamborito.</p>
+            <h3>Gastronomía</h3>
+            <p>Además, compartimos una rica gastronomía con delicias como cocadas, cocaditas, rosquetes, yuca, chicharrones y chicha de junta.</p>
+        ` 
+    },
+    { 
+        lat: 7.9, lng: -80.4, cat: 'Talleres de artesanías', nombre: 'El Sombrero Pintao', color: '#27ae60', 
+        img: 'https://i.postimg.cc/vHDffyq2/sombrero-pintao.jpg', 
+        desc: `
+            <p>¿Sabías que un sombrero pintado de alta calidad puede tomar entre 3 y 6 meses de trabajo manual? Esta artesanía tradicional panameña se elabora con fibras naturales de bellota, que son cuidadosamente seleccionadas, secadas, teñidas y tejidas a mano.</p>
+            <p>Los diseños oscuros característicos se obtienen mediante tintes naturales extraídos de plantas y cortezas. Mientras más fino y apretado sea el tejido, mayor será el tiempo de elaboración y el valor de la pieza.</p>
+            <p>Esta pieza no solo es un accesorio, es un símbolo de identidad nacional.</p>
+        ` 
+    },
+    { 
+        lat: 7.766676153095528, lng: -80.27775169145308, cat: 'Parques culturales', nombre: 'Parque Porras', color: '#2980b9', 
+        img: 'https://i.postimg.cc/X7XD2p7d/parqueporraslt.png', 
+        desc: `
+            <p>El Parque Porras, ubicado en el distrito de Las Tablas, provincia de Los Santos, es uno de los espacios públicos más emblemáticos del país. Su nombre honra al expresidente panameño Belisario Porras Barahona, originario de la región.</p>
+            <h3>Historia y evolución</h3>
+            <p>El parque fue inaugurado alrededor de 1915, como parte del desarrollo urbano de la ciudad tableña, convirtiéndose desde entonces en un punto central de encuentro social y cultural.</p>
+            <p>Ha funcionado como lugar de reuniones, tertulias y actividades culturales, destacando su rol esencial durante las celebraciones del Carnaval tableño.</p>
+            <h3>Restauración y legado</h3>
+            <p>El parque ha pasado por varias remodelaciones, destacando una gran restauración en 2010. Hoy en día, también alberga el Museo Belisario Porras, que conserva documentos y memoria histórica de su legado en Panamá.</p>
+        ` 
+    }
+];
+
+    map.on('click', (e) => {
+        document.getElementById('formulario').style.display = 'flex';
+        document.getElementById('coords').value = e.latlng.lat.toFixed(4) + ", " + e.latlng.lng.toFixed(4);
+    });
+
+    function actualizarMapa() {
+        map.eachLayer((layer) => { if (layer instanceof L.CircleMarker) map.removeLayer(layer); });
+        puntos.forEach(p => {
+            const checkbox = document.querySelector(`[data-cat="${p.cat}"]`);
+            if (checkbox && checkbox.checked) {
+                L.circleMarker([p.lat, p.lng], {color: p.color, radius: 8}).addTo(map)
+                 .on('click', (e) => {
+                     L.DomEvent.stopPropagation(e);
+                     document.getElementById('info-modal').style.display = 'flex';
+                     document.getElementById('post-data').innerHTML = `
+                         <img src="${p.img}">
+                         <div class="post-content">
+                             <h2>${p.nombre}</h2>
+                             <p style="text-align:justify;">${p.desc}</p>
+                         </div>
+                     `;
+                 });
+            }
+        });
+    }
+
+    document.querySelectorAll('.filtro').forEach(cb => cb.addEventListener('change', actualizarMapa));
+    actualizarMapa();
+</script>
+</body>
+</html>
