@@ -104,14 +104,16 @@
         <div class="post-content">
             <h2>Sugerir nueva ubicación</h2>
 <form action="https://formsubmit.co/b8fbb405a3bce986fe67732366390e27" method="POST" enctype="multipart/form-data">
+    <!-- 1. Campos ocultos para evitar el CAPTCHA y organizar tu correo -->
+    <input type="hidden" name="_subject" value="Nuevo registro - Herencia Viva">
+    <input type="hidden" name="_captcha" value="false">
     
-    
-    <!-- Campos del formulario -->
     <label for="nombre">Nombre del sitio o tradición:</label>
     <input type="text" id="nombre" name="nombre" placeholder="Ej: Festival de la Pollera" required>
 
-    <label for="coordenadas">Coordenadas:</label>
-    <input type="text" id="coordenadas" name="coordenadas" placeholder="Latitud, Longitud" required>
+    <!-- 2. CAMBIO AQUÍ: ID 'coords' para que el JS lo encuentre y 'readonly' para que nadie lo borre -->
+    <label for="coords">Coordenadas:</label>
+    <input type="text" id="coords" name="coordenadas" placeholder="Haz clic en el mapa..." readonly required>
     
     <label for="categoria">Categoría:</label>
     <select id="categoria" name="categoria" required>
@@ -125,10 +127,12 @@
     <textarea id="descripcion" name="descripcion" placeholder="Cuenta brevemente sobre este patrimonio..." required></textarea>
     
     <label for="foto">Subir imagen:</label>
-    <input type="file" id="foto" name="foto" accept="image/*">
+    <input type="file" id="foto" name="foto" accept="image/*" required>
     
-    <!-- Botón de envío -->
-    <button type="submit">Enviar sugerencia</button>
+    <!-- 3. Botón con estilo mejorado para que no se vea "chiquito" -->
+    <button type="submit" style="width:100%; padding:15px; margin-top:10px; background:#7d6948; color:white; border:none; border-radius:10px; cursor:pointer; font-weight:bold;">
+        Enviar sugerencia
+    </button>
 </form>
         </div>
         <button class="close-btn" onclick="document.getElementById('formulario').style.display='none'">Cerrar</button>
