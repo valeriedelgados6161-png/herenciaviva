@@ -102,40 +102,35 @@
 <div id="formulario" class="modal">
     <div class="post-card">
         <div class="post-content">
-            <h2>Sugerir nueva ubicación</h2>
-<form action="https://formsubmit.co/b8fbb405a3bce986fe67732366390e27" method="POST" enctype="multipart/form-data">
-    <!-- 1. Campos ocultos para evitar el CAPTCHA y organizar tu correo -->
-    <input type="hidden" name="_subject" value="Nuevo registro - Herencia Viva">
-    <input type="hidden" name="_captcha" value="false">
+            
+       <form action="https://formsubmit.co/b8fbb405a3bce986fe67732366390e27" method="POST" enctype="multipart/form-data">
     
-    <label for="nombre">Nombre del sitio o tradición:</label>
-    <input type="text" id="nombre" name="nombre" placeholder="Ej: Festival de la Pollera" required>
+    <h2 style="margin-top:0;">Registrar nuevo lugar</h2>
 
-    <!-- 2. CAMBIO AQUÍ: ID 'coords' para que el JS lo encuentre y 'readonly' para que nadie lo borre -->
+    <label for="nombre">Nombre del sitio:</label>
+    <input type="text" id="nombre" name="nombre" placeholder="Ej: Iglesia San Lorenzo" required>
+
     <label for="coords">Coordenadas:</label>
-    <input type="text" id="coords" name="coordenadas" placeholder="Haz clic en el mapa..." readonly required>
-    
+    <input type="text" id="coords" name="coordenadas" placeholder="Haz clic en el mapa" readonly required>
+
     <label for="categoria">Categoría:</label>
     <select id="categoria" name="categoria" required>
-        <option value="">Selecciona una categoría</option>
-        <option value="Patrimonio">Patrimonio Histórico</option>
-        <option value="Tradicion">Tradición Oral</option>
-        <option value="Artesania">Manos que Crean</option>
+        <option value="">Selecciona una opción</option>
+        <option value="Iglesias">Iglesias</option>
+        <option value="Historia">Historia y Raíces</option>
     </select>
 
     <label for="descripcion">Descripción:</label>
-    <textarea id="descripcion" name="descripcion" placeholder="Cuenta brevemente sobre este patrimonio..." required></textarea>
-    
-    <label for="foto">Subir imagen:</label>
+    <textarea id="descripcion" name="descripcion" rows="4" placeholder="Describe el lugar aquí..." required></textarea>
+
+    <label for="foto">Sube una foto del lugar:</label>
     <input type="file" id="foto" name="foto" accept="image/*" required>
-    
-    <!-- 3. Botón con estilo mejorado para que no se vea "chiquito" -->
-    <button type="submit" style="width:100%; padding:15px; margin-top:10px; background:#7d6948; color:white; border:none; border-radius:10px; cursor:pointer; font-weight:bold;">
-        Enviar sugerencia
-    </button>
+
+    <button type="submit">Enviar registro</button>
+    <button type="button" onclick="document.getElementById('formulario').style.display='none'" style="background:#ccc; margin-top:10px;">Cancelar</button>
 </form>
+
         </div>
-        <button class="close-btn" onclick="document.getElementById('formulario').style.display='none'">Cerrar</button>
     </div>
 </div>
 
