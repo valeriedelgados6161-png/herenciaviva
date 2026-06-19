@@ -103,46 +103,32 @@
     <div class="post-card">
         <div class="post-content">
             <h2>Sugerir nueva ubicación</h2>
-<form action="https://formsubmit.co/el/guwexe" method="POST" enctype="multipart/form-data" 
-      style="display: flex; flex-direction: column; gap: 12px; padding: 15px; background: #fff; border-radius: 20px; border: 1px solid #eee; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+<form action="https://formsubmit.co/b8fbb405a3bce986fe67732366390e27" method="POST" enctype="multipart/form-data">
     
-    <h3 style="margin: 0; color: #1d3557; text-align: center; font-family: 'Montserrat', sans-serif;">Sugerir nuevo sitio</h3>
+    
+    <!-- Campos del formulario -->
+    <label for="nombre">Nombre del sitio o tradición:</label>
+    <input type="text" id="nombre" name="nombre" placeholder="Ej: Festival de la Pollera" required>
 
-    <!-- Nombre del sitio -->
-    <input type="text" name="nombre" placeholder="Nombre del sitio" required 
-           style="padding: 12px; border: 1px solid #ddd; border-radius: 10px; font-size: 14px;">
+    <label for="coordenadas">Coordenadas:</label>
+    <input type="text" id="coordenadas" name="coordenadas" placeholder="Latitud, Longitud" required>
     
-    <!-- Coordenadas (Autocompletadas por tu script) -->
-    <input id="coords" name="coordenadas" readonly 
-           style="padding: 12px; border: 1px solid #ddd; border-radius: 10px; background-color: #f9f9f9; color: #666; font-size: 14px;">
-    
-    <!-- Categoría -->
-    <select name="categoria" required 
-            style="padding: 12px; border: 1px solid #ddd; border-radius: 10px; font-size: 14px; background: white;">
+    <label for="categoria">Categoría:</label>
+    <select id="categoria" name="categoria" required>
         <option value="">Selecciona una categoría</option>
-        <option value="Patrimonio Histórico">Patrimonio Histórico</option>
-        <option value="Manos que Crean">Manos que Crean</option>
-        <option value="Sabores de Nuestra Tierra">Sabores de Nuestra Tierra</option>
-        <option value="Expresiones y Leyendas">Expresiones y Leyendas</option>
-        <option value="Espacios de Encuentro">Espacios de Encuentro</option>
-        <option value="Secretos de la Tierra">Secretos de la Tierra</option>
+        <option value="Patrimonio">Patrimonio Histórico</option>
+        <option value="Tradicion">Tradición Oral</option>
+        <option value="Artesania">Manos que Crean</option>
     </select>
 
-    <!-- Descripción -->
-    <textarea name="descripcion" placeholder="Describe brevemente este sitio..." required 
-              style="padding: 12px; border: 1px solid #ddd; border-radius: 10px; height: 80px; font-family: inherit; font-size: 14px; resize: none;"></textarea>
+    <label for="descripcion">Descripción:</label>
+    <textarea id="descripcion" name="descripcion" placeholder="Cuenta brevemente sobre este patrimonio..." required></textarea>
     
-    <!-- Carga de archivo -->
-    <div style="border: 2px dashed #ccc; padding: 10px; border-radius: 10px; text-align: center; background: #fdfdfd;">
-        <label style="font-size: 12px; color: #555; display: block; margin-bottom: 5px;">📷 Subir foto del sitio:</label>
-        <input type="file" name="foto" accept="image/*" style="font-size: 12px; width: 100%;">
-    </div>
+    <label for="foto">Subir imagen:</label>
+    <input type="file" id="foto" name="foto" accept="image/*">
     
     <!-- Botón de envío -->
-    <button type="submit" 
-            style="padding: 14px; background: #7d6948; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-family: 'Montserrat', sans-serif;">
-        Enviar sugerencia
-    </button>
+    <button type="submit">Enviar sugerencia</button>
 </form>
         </div>
         <button class="close-btn" onclick="document.getElementById('formulario').style.display='none'">Cerrar</button>
